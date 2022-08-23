@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
+import StudentForm from "./StudentForm";
 const StudentList = () => {
   const [students, setstudents] = useState([]);
   const [regno, setregno] = useState(null);
@@ -10,6 +11,11 @@ const StudentList = () => {
   let handleClick = (regno) => {
     console.log(regno);
     setregno(regno);
+  };
+  let showUpdated = (student) => {
+    //console.log('updated', std);
+    setstudents(students.map((s) => (s._id === student._id ? student : s)));
+    setregno(null);
   };
   let url = "#";
   return (
@@ -37,6 +43,11 @@ const StudentList = () => {
             ))}
           </tbody>
         </table>
+      </div>
+      <div className="col">
+        {regno !== null && (
+          <StudentForm regno={regno} showUpdated={showUpdated} />
+        )}
       </div>
     </div>
   );
