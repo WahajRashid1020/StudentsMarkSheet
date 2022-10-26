@@ -25,7 +25,7 @@ const StudentForm = (props) => {
     <div>
       <table>
         <tbody>
-          {Object.keys(student).map((key, i) => (
+          {Object.keys(student)?.map((key, i) => (
             <tr key={i}>
               <th style={{ textAlign: "right" }}>{key}:</th>
               <td>

@@ -1,25 +1,27 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React from "react";
 import { useEffect } from "react";
-import StudentForm from "./StudentForm";
-const StudentList = () => {
-  const [students, setstudents] = useState([]);
+import { useState } from "react";
+import "../App.css";
+import axios from "axios";
+import ListForm from "./ListForm";
+import Myform from "./Myform";
+const List = () => {
+  const [students, setStudents] = useState([]);
   const [regno, setregno] = useState(null);
+
   useEffect(() => {
-    axios.get("/api/students").then((students) => setstudents(students.data));
+    axios.get("/api/students").then((students) => setStudents(students.data));
   }, []);
-  let handleClick = (regno) => {
-    console.log(regno);
+  const handleClick = (regno) => {
     setregno(regno);
   };
   let showUpdated = (student) => {
-    //console.log('updated', std);
-    setstudents(students?.map((s) => (s._id === student._id ? student : s)));
+    setStudents(students.map((s) => (s._id === student._id ? student : s)));
     setregno(null);
   };
   let url = "#";
   return (
-    <div>
+    <>
       <div className="col">
         <table>
           <thead>
@@ -30,7 +32,7 @@ const StudentList = () => {
             </tr>
           </thead>
           <tbody>
-            {students?.map((student) => (
+            {students.map((student) => (
               <tr key={student._id}>
                 <td>{student.regno}</td>
                 <td>
@@ -45,12 +47,10 @@ const StudentList = () => {
         </table>
       </div>
       <div className="col">
-        {regno !== null && (
-          <StudentForm regno={regno} showUpdated={showUpdated} />
-        )}
+        {regno !== null && <Myform showUpdated={showUpdated} regno={regno} />}
       </div>
-    </div>
+    </>
   );
 };
 
-export default StudentList;
+export default List;
